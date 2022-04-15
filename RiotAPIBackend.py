@@ -47,6 +47,21 @@ def get_personal_statistics(game_name, tagline):
                         f"/ids?start=0&count=5&{riot_api_key}"
     match_history_response = requests.get(match_history_url)
     match_history_ids = match_history_response.json()
-    match_info_url = f"https://americas.api.riotgames.com/lol/match/v5/matches/{match_history_ids[0]}" \
-                     f"?{riot_api_key}"
+    detailed_match_data = []
+    for match_id in match_history_ids:
+        match_info_url = f"https://americas.api.riotgames.com/lol/match/v5/matches/{match_id}" \
+                         f"?{riot_api_key}"
+        match_info_response = requests.get(match_info_url)
+        match_info = match_info_response.json()
+        player_number = match_info["metadata"]["participants"].index(player_puuid)
+        detailed_match_data.append(match_info["info"]["participants"][player_number])
+    for i in detailed_match_data:
+        print(i)
+    return match_info["info"]["participants"][player_number]
+
+
+def get_radiant_valorant_leaderboard():
+    valorant_content_url = f"https://na.api.riotgames.com/val/content/v1/contents?{riot_api_key}"
+    valorant_content_response = requests.get(valorant_content_url)
+    act_id = valorant_content_response.json()["acts"][-1]["id"]
 

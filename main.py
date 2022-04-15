@@ -425,4 +425,5 @@ class ValorantLeaderboard(tk.Frame):
 if __name__ == "__main__":
     app = RiotDirectoryApp()
     RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona")
+    RiotAPI.get_radiant_valorant_leaderboard()
     app.mainloop()
