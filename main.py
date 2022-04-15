@@ -77,7 +77,7 @@ class Homepage(tk.Frame):
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx+2, column=0)
+            dir_widgets[idx].grid(row=idx, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
@@ -96,7 +96,7 @@ class Homepage(tk.Frame):
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
-        created_by_label.grid(row=3, column=0, sticky="sw")
+        created_by_label.grid(row=7, column=0, sticky="sw")
         self.grid_rowconfigure(7, weight=1)
 
 
@@ -153,7 +153,7 @@ class LeagueLeaderboard(tk.Frame):
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx + 2, column=0)
+            dir_widgets[idx].grid(row=idx, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
@@ -170,7 +170,7 @@ class LeagueLeaderboard(tk.Frame):
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
         created_by_label.grid(row=7, column=0, sticky="sw")
         self.grid_rowconfigure(7, weight=1)
-        LeagueLeaderboard.get_leaderboard_data()
+        #LeagueLeaderboard.get_leaderboard_data()
 
     @staticmethod
     def get_leaderboard_data():
@@ -225,7 +225,7 @@ class ProPlay(tk.Frame):
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx + 2, column=0)
+            dir_widgets[idx].grid(row=idx, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
@@ -292,7 +292,7 @@ class PersonalStats(tk.Frame):
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx + 2, column=0)
+            dir_widgets[idx].grid(row=idx, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
@@ -313,19 +313,91 @@ class PersonalStats(tk.Frame):
 
 class Guides(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, bg="#2b2b2b")
+        self.side_nav_font = font.Font(family="System", size=18)
         self.controller = controller
-        label = tk.Label(self, text="What guides would you like to view?")
-        label.pack(fill="x", pady=40, padx=40)
-        home = tk.Button(self, text="Back to home page",
+
+        page_title = tk.Label(self, text="GUIDES", height=2,
+                              font=font.Font(family="System", size=32), bg="#2b2b2b", fg="white")
+        page_title.grid(row=0, column=0, sticky="news", pady=10)
+        break_line = tk.Label(self, text="", bg="white", height=0)
+        break_line.grid(row=1, column=0, sticky="news")
+        self.grid_columnconfigure(0, weight=1)
+
+        page_content = tk.Frame(self, bg="#2b2b2b")
+        page_content.grid(row=2, column=0, sticky="w")
+
+        side_nav = tk.Frame(page_content, bg="#2b2b2b")
+        side_nav.grid(row=0, column=0, sticky="w")
+        self.grid_rowconfigure(2, weight=1)
+
+        home = tk.Button(side_nav, text="Home",
+                         width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                         bg="#2b2b2b", fg="white",
                          command=lambda: controller.switch_frame(Homepage))
-        valorant_guides = tk.Button(self, text="Click here for Valorant guides",
+
+        league_lb = tk.Button(side_nav, text="League Leaderboard",
+                              width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                              bg="#2b2b2b", fg="white",
+                              command=lambda: controller.switch_frame(LeagueLeaderboard))
+
+        pro_play = tk.Button(side_nav, text="Pro Matches",
+                             width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                             bg="#2b2b2b", fg="white",
+                             command=lambda: controller.switch_frame(ProPlay))
+
+        personal_stats = tk.Button(side_nav, text="League Match History",
+                                   width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                                   bg="#2b2b2b", fg="white",
+                                   command=lambda: controller.switch_frame(PersonalStats))
+
+        guides = tk.Label(side_nav, text="-> Guides <-",
+                           width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                           bg="#2b2b2b", fg="white")
+
+        valorant_lb = tk.Button(side_nav, text="Valorant Leaderboard", highlightthickness=0, bd=0,
+                                width=20, height=2, font=self.side_nav_font,
+                                bg="#2b2b2b", fg="white",
+                                command=lambda: controller.switch_frame(ValorantLeaderboard))
+
+        dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
+        for idx in range(6):
+            dir_widgets[idx].grid(row=idx, column=0)
+
+        # Separate Valorant and League of Legends Guides by page/frame
+        league_guides = tk.Button(side_nav, text="League of Legends Guides",
+                                  height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                                  bg="#2b2b2b", fg="white",
+                                  command=lambda: controller.switch_frame(LeagueGuides))
+        valorant_guides = tk.Button(side_nav, text="Valorant Guides",
+                                    height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
+                                    bg="#2b2b2b", fg="white",
                                     command=lambda: controller.switch_frame(ValorantGuides))
-        lol_guides = tk.Button(self, text="Click here for League of Legends guides",
-                               command=lambda: controller.switch_frame(LeagueGuides))
-        home.pack()
-        valorant_guides.pack()
-        lol_guides.pack()
+        dir_widgets.extend([league_guides, valorant_guides])
+        league_guides.grid(row=2, column=1, padx=180)
+        valorant_guides.grid(row=5, column=1)
+
+        def hovering(e):
+            e.widget["background"] = "gray"
+
+        def not_hovering(e):
+            e.widget["background"] = "#2b2b2b"
+
+        dir_widgets.remove(guides)
+        for button in dir_widgets:
+            button.bind("<Enter>", hovering)
+            button.bind("<Leave>", not_hovering)
+
+        created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
+                                    bg="#2b2b2b", fg="white", font=("Helvetica", 8))
+        created_by_label.grid(row=7, column=0, sticky="sw")
+        self.grid_rowconfigure(7, weight=1)
+
+
+        #CHANGE TO GRID
+        #home.pack()
+        #valorant_guides.pack()
+        #lol_guides.pack()
 
 
 class LeagueGuides(tk.Frame):
@@ -404,7 +476,7 @@ class ValorantLeaderboard(tk.Frame):
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx + 2, column=0)
+            dir_widgets[idx].grid(row=idx, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
