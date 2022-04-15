@@ -90,9 +90,9 @@ class Homepage(tk.Frame):
             button.bind("<Enter>", hovering)
             button.bind("<Leave>", not_hovering)
 
-        newFrame = tk.Canvas(page_content, bg="white")
-        newFrame.grid(row=1, column=1, sticky="news")
-        tk.Label(newFrame, text="efajhklfhjkashfjkashdfkjashjkflahjkdfahsjkfhaskjfhasjkldhasjkdfhasjkfhasdkjfhasdjkfhasdjkfhasdkjlfhasdjklfdkajklsdhfajklftrhrthrthrthtrhr").grid(row=0, column=0)
+        new_frame = tk.Canvas(page_content, bg="white")
+        new_frame.grid(row=1, column=1, sticky="news")
+        tk.Label(new_frame, text="efajhklfhjkashfjkashdfkjashjkflahjkdfahsjkfhaskjfhasjkldhasjkdfhasjkfhasdkjfhasdjkfhasdjkfhasdkjlfhasdjklfdkajklsdhfajklftrhrthrthrthtrhr").grid(row=0, column=0)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -175,6 +175,7 @@ class LeagueLeaderboard(tk.Frame):
     @staticmethod
     def get_leaderboard_data():
         league_leaderboard = RiotAPI.get_challenger_leaderboard()
+
 
 class ProPlay(tk.Frame):
     def __init__(self, parent, controller):
@@ -424,6 +425,7 @@ class ValorantLeaderboard(tk.Frame):
 
 if __name__ == "__main__":
     app = RiotDirectoryApp()
-    RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona")
+    for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
+        print(i)
     RiotAPI.get_radiant_valorant_leaderboard()
     app.mainloop()

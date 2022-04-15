@@ -55,13 +55,21 @@ def get_personal_statistics(game_name, tagline):
         match_info = match_info_response.json()
         player_number = match_info["metadata"]["participants"].index(player_puuid)
         detailed_match_data.append(match_info["info"]["participants"][player_number])
-    for i in detailed_match_data:
-        print(i)
-    return match_info["info"]["participants"][player_number]
+    return detailed_match_data
 
 
 def get_radiant_valorant_leaderboard():
     valorant_content_url = f"https://na.api.riotgames.com/val/content/v1/contents?{riot_api_key}"
     valorant_content_response = requests.get(valorant_content_url)
-    act_id = valorant_content_response.json()["acts"][-1]["id"]
-
+    act_id = ""
+    act_name = ""
+    for act in valorant_content_response.json()["acts"]:
+        if act["isActive"]:
+            act_id = act["id"]
+            act_name = act["name"]
+            break
+    valorant_top_10_url = f"https://na.api.riotgames.com/val/ranked/v1/leaderboards/by-act/{act_id}" \
+                          f"?size=10&startIndex=0&{riot_api_key}"
+    valorant_top_10_response = requests.get(valorant_top_10_url)
+    valorant_top_10 = valorant_top_10_response.json()["players"]
+    return act_name, valorant_top_10
