@@ -45,11 +45,14 @@ class Homepage(tk.Frame):
         # page_content frame holds all the page content such as navigation buttons and the data on the right
         page_content = tk.Frame(self, background="#2b2b2b")
         page_content.grid(row=2, column=0, sticky="w")
-
-        # side_nav frame holds the side navigation buttons
-        side_nav = tk.Frame(page_content, background="#2b2b2b")
-        side_nav.grid(row=1, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav(page_content, controller)
+
+    def create_side_nav(self, frame, controller):
+        # side_nav frame holds the side navigation buttons
+        side_nav = tk.Frame(frame, background="#2b2b2b")
+        side_nav.grid(row=1, column=0, sticky="w")
 
         home = tk.Label(side_nav, text="-> Home",
                         width=20, height=2, font=self.side_nav_font,
@@ -90,7 +93,7 @@ class Homepage(tk.Frame):
             button.bind("<Enter>", hovering)
             button.bind("<Leave>", not_hovering)
 
-        new_frame = tk.Canvas(page_content, bg="white")
+        new_frame = tk.Canvas(frame, bg="white")
         new_frame.grid(row=1, column=1, sticky="news")
         tk.Label(new_frame, text="efajhklfhjkashfjkashdfkjashjkflahjkdfahsjkfhaskjfhasjkldhasjkdfhasjkfhasdkjfhasdjkfhasdjkfhasdkjlfhasdjklfdkajklsdhfajklftrhrthrthrthtrhr").grid(row=0, column=0)
 
@@ -115,12 +118,16 @@ class LeagueLeaderboard(tk.Frame):
         break_line = tk.Label(self, text="", bg="white", height=0)
         break_line.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
-        self.create_side_nav(self.controller)
 
-    def create_side_nav(self, controller):
-        side_nav = tk.Frame(self, bg="#2b2b2b")
-        side_nav.grid(row=2, column=0, sticky="w")
+        page_content = tk.Frame(self, bg="#2b2b2b")
+        page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav(page_content, controller)
+
+    def create_side_nav(self, frame, controller):
+        side_nav = tk.Frame(frame, bg="#2b2b2b")
+        side_nav.grid(row=2, column=0, sticky="w")
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
@@ -190,9 +197,15 @@ class ProPlay(tk.Frame):
         break_line.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
 
-        side_nav = tk.Frame(self, bg="#2b2b2b")
-        side_nav.grid(row=2, column=0, sticky="w")
+        page_content = tk.Frame(self, bg="#2b2b2b")
+        page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav(page_content, controller)
+
+    def create_side_nav(self, frame, controller):
+        side_nav = tk.Frame(frame, bg="#2b2b2b")
+        side_nav.grid(row=2, column=0, sticky="w")
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
@@ -257,9 +270,15 @@ class PersonalStats(tk.Frame):
         break_line.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
 
-        side_nav = tk.Frame(self, bg="#2b2b2b")
-        side_nav.grid(row=2, column=0, sticky="w")
+        page_content = tk.Frame(self, bg="#2b2b2b")
+        page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav(page_content, controller)
+
+    def create_side_nav(self, frame, controller):
+        side_nav = tk.Frame(frame, bg="#2b2b2b")
+        side_nav.grid(row=0, column=0, sticky="w")
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
@@ -324,12 +343,16 @@ class Guides(tk.Frame):
         break_line.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
 
+        # must add in order to add things to the right of the side navigation.
         page_content = tk.Frame(self, bg="#2b2b2b")
         page_content.grid(row=2, column=0, sticky="w")
-
-        side_nav = tk.Frame(page_content, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav_and_guide_buttons(page_content, controller)
+
+    def create_side_nav_and_guide_buttons(self, frame, controller):
+        side_nav = tk.Frame(frame, bg="#2b2b2b")
+        side_nav.grid(row=0, column=0, sticky="w")
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
@@ -394,12 +417,6 @@ class Guides(tk.Frame):
         self.grid_rowconfigure(7, weight=1)
 
 
-        #CHANGE TO GRID
-        #home.pack()
-        #valorant_guides.pack()
-        #lol_guides.pack()
-
-
 class LeagueGuides(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -441,9 +458,15 @@ class ValorantLeaderboard(tk.Frame):
         break_line.grid(row=1, column=0, sticky="news")
         self.grid_columnconfigure(0, weight=1)
 
-        side_nav = tk.Frame(self, bg="#2b2b2b")
-        side_nav.grid(row=2, column=0, sticky="w")
+        page_content = tk.Frame(self, bg="#2b2b2b")
+        page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
+
+        self.create_side_nav(page_content, controller)
+
+    def create_side_nav(self, frame, controller):
+        side_nav = tk.Frame(frame, bg="#2b2b2b")
+        side_nav.grid(row=0, column=0, sticky="w")
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, font=self.side_nav_font, highlightthickness=0, bd=0,
