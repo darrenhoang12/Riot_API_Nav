@@ -7,6 +7,7 @@ from PIL import ImageTk, Image
 class RiotDirectoryApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+        self.wm_attributes("-transparentcolor", "yellow")
         self.title("LOL and Valorant Navigation App for Desktops")
         self.geometry("1200x650")
 
@@ -98,7 +99,7 @@ class Homepage(tk.Frame):
             widget.bind("<Enter>", hovering)
             widget.bind("<Leave>", not_hovering)
 
-        main_content_frame = tk.Frame(frame, bg="#2b2b2b", width=500, height=400)
+        main_content_frame = tk.Frame(frame, bg="#2b2b2b")
         main_content_frame.grid(row=1, column=1, padx=5)
 
         img = tk.Label(main_content_frame, bg="#2b2b2b", image=self.photo)
@@ -340,6 +341,19 @@ class PersonalStats(tk.Frame):
 class Guides(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#2b2b2b")
+
+        self.guides_bg = Image.open("guides_bg.jpg")
+        self.guides_bg = self.guides_bg.resize((825, 470))
+        self.guides_bg = ImageTk.PhotoImage(self.guides_bg)
+
+        self.league_logo = Image.open("league_logo.jpeg")
+        self.league_logo = self.league_logo.resize((150,150))
+        self.league_logo = ImageTk.PhotoImage(self.league_logo)
+
+        self.valorant_logo = Image.open("valorant_logo.png")
+        self.valorant_logo = self.valorant_logo.resize((150, 150))
+        self.valorant_logo = ImageTk.PhotoImage(self.valorant_logo)
+
         self.side_nav_font = font.Font(family="System", size=18)
         self.controller = controller
 
@@ -394,18 +408,29 @@ class Guides(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
+        main_content_frame = tk.Frame(frame, bg="#2b2b2b", width=500, height=400)
+        main_content_frame.grid(row=0, column=1)
         # Separate Valorant and League of Legends Guides by page/frame
-        league_guides = tk.Button(side_nav, text="League of Legends Guides",
+        background_label = tk.Label(main_content_frame, image=self.guides_bg, bg="#2b2b2b")
+
+        league_guides = tk.Button(main_content_frame, text="League Guides",
                                   height=2, highlightthickness=0, bd=0,
                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                   command=lambda: controller.switch_frame(LeagueGuides))
-        valorant_guides = tk.Button(side_nav, text="Valorant Guides",
+        valorant_guides = tk.Button(main_content_frame, text="Valorant Guides",
                                     height=2, highlightthickness=0, bd=0,
                                     font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                     command=lambda: controller.switch_frame(ValorantGuides))
         dir_widgets.extend([league_guides, valorant_guides])
-        league_guides.grid(row=2, column=1, padx=220)
-        valorant_guides.grid(row=5, column=1)
+
+        lol_logo = tk.Label(main_content_frame, image=self.league_logo, bg="#2b2b2b")
+        val_logo = tk.Label(main_content_frame, image=self.valorant_logo, bg="#2b2b2b")
+
+        background_label.place(x=100, y=25)
+        lol_logo.grid(row=0, column=0, padx=325)
+        league_guides.grid(row=1, column=0)
+        val_logo.grid(row=2, column=0)
+        valorant_guides.grid(row=3, column=0)
 
         def hovering(e):
             e.widget["background"] = "gray"
@@ -593,8 +618,7 @@ class ValorantLeaderboard(tk.Frame):
 
 if __name__ == "__main__":
     app = RiotDirectoryApp()
-    for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
-        print(i)
-    print('adding commit test')
-    RiotAPI.get_radiant_valorant_leaderboard()
+    #for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
+        #print(i)
+    #RiotAPI.get_radiant_valorant_leaderboard()
     app.mainloop()
