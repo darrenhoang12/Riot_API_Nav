@@ -593,8 +593,8 @@ class ValorantLeaderboard(tk.Frame):
 
 if __name__ == "__main__":
     app = RiotDirectoryApp()
-    #for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
-        #print(i)
-    #print('adding commit test')
-    #RiotAPI.get_radiant_valorant_leaderboard()
+    for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
+        print(i)
+    print('adding commit test')
+    RiotAPI.get_radiant_valorant_leaderboard()
     app.mainloop()
