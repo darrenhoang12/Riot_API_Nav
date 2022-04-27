@@ -7,7 +7,6 @@ from PIL import ImageTk, Image
 class RiotDirectoryApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        self.wm_attributes("-transparentcolor", "yellow")
         self.title("LOL and Valorant Navigation App for Desktops")
         self.geometry("1200x650")
 
@@ -31,12 +30,12 @@ class RiotDirectoryApp(tk.Tk):
         frame.tkraise()
 
     @staticmethod
-    def hovering(e):
-        e.widget["background"] = "gray"
+    def hovering(event):
+        event.widget["background"] = "gray"
 
     @staticmethod
-    def not_hovering(e):
-        e.widget["background"] = "#2b2b2b"
+    def not_hovering(event):
+        event.widget["background"] = "#2b2b2b"
 
 
 class Homepage(tk.Frame):
@@ -61,9 +60,9 @@ class Homepage(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav(page_content, controller)
+        self.create_side_nav(controller, page_content)
 
-    def create_side_nav(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         # side_nav frame holds the side navigation buttons
         side_nav = tk.Frame(frame, background="#2b2b2b")
         side_nav.grid(row=1, column=0, sticky="w")
@@ -133,9 +132,9 @@ class LeagueLeaderboard(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav(page_content, controller)
+        self.create_side_nav(controller, page_content)
 
-    def create_side_nav(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
         side_nav.grid(row=2, column=0, sticky="w")
 
@@ -205,9 +204,9 @@ class ProPlay(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav(page_content, controller)
+        self.create_side_nav(controller, page_content)
 
-    def create_side_nav(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
         side_nav.grid(row=2, column=0, sticky="w")
 
@@ -258,6 +257,13 @@ class ProPlay(tk.Frame):
 class PersonalStats(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#2b2b2b")
+        self.summoner_name = tk.StringVar()
+        self.summoner_tagline = tk.StringVar()
+
+        self.guides_bg = Image.open("guides_bg.jpg")
+        self.guides_bg = self.guides_bg.resize((825, 450))
+        self.guides_bg = ImageTk.PhotoImage(self.guides_bg)
+
         self.side_nav_font = font.Font(family="System", size=18)
         self.controller = controller
 
@@ -272,9 +278,10 @@ class PersonalStats(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav(page_content, controller)
+        self.create_side_nav(controller, page_content)
+        self.input_summoner_name_info(page_content)
 
-    def create_side_nav(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
         side_nav.grid(row=0, column=0, sticky="w")
 
@@ -321,6 +328,67 @@ class PersonalStats(tk.Frame):
         created_by_label.grid(row=7, column=0, sticky="sw")
         self.grid_rowconfigure(7, weight=1)
 
+    def input_summoner_name_info(self, frame):
+        main_content_frame = tk.Frame(frame, bg="#2b2b2b", width=800)
+        main_content_frame.grid(row=0, column=1, sticky="news")
+        main_content_frame.grid_propagate(False)
+        background_label = tk.Label(main_content_frame, image=self.guides_bg, bg="#2b2b2b")
+        prompt_input_label = tk.Label(main_content_frame, text="Find your match history",
+                                      font=font.Font(family="System", size=10), bg="#2b2b2b", fg="white")
+        entry_summoner_name = tk.Entry(main_content_frame, textvariable=self.summoner_name, width=25)
+        entry_summoner_tagline = tk.Entry(main_content_frame, textvariable=self.summoner_tagline, width=15)
+        search_button = tk.Button(main_content_frame, text="SEARCH", font=font.Font(family="System", size=10),
+                                  command=lambda: self.create_stats(self.summoner_name.get(),
+                                                                    self.summoner_tagline.get(), main_content_frame))
+
+        background_label.place(x=150, y=75, relheight=1, relwidth=1)
+
+        prompt_input_label.grid(row=0, column=0, pady=(10, 0), sticky="w")
+
+        entry_summoner_name.grid(row=1, column=0, padx=(0, 5))
+        entry_summoner_name.insert(0, "Summoner name...")
+        entry_summoner_name.config(fg="grey", font=font.Font(family="System"))
+        entry_summoner_name.bind("<FocusIn>", lambda event: PersonalStats.on_entry_click(event, "Summoner name..."))
+        entry_summoner_name.bind("<FocusOut>", lambda event: PersonalStats.on_focus_out(event, "Summoner name..."))
+
+        entry_summoner_tagline.grid(row=1, column=1)
+        entry_summoner_tagline.insert(0, "Tagline...")
+        entry_summoner_tagline.config(fg="grey", font=font.Font(family="System"))
+        entry_summoner_tagline.bind("<FocusIn>", lambda event: PersonalStats.on_entry_click(event, "Tagline..."))
+        entry_summoner_tagline.bind("<FocusOut>", lambda event: PersonalStats.on_focus_out(event, "Tagline...") )
+
+        search_button.grid(row=1, column=2, padx=(5, 0))
+
+    def create_stats(self, summoner_name, summoner_tagline, frame):
+        match_history = RiotAPI.get_personal_statistics(summoner_name, summoner_tagline)
+        champions_played = []
+        kills_match = []
+        deaths_match = []
+        assists_match = []
+
+        for match in match_history:
+            champions_played.append(match["championName"])
+            kills_match.append(match["kills"])
+            deaths_match.append(match["deaths"])
+            assists_match.append(match["assists"])
+        print(champions_played)
+        print(kills_match)
+        print(deaths_match)
+        print(assists_match)
+
+    @staticmethod
+    def on_entry_click(event, message):
+        if event.widget.get() == message:
+            event.widget.delete(0, "end")
+            event.widget.insert(0, "")
+            event.widget.config(fg="black", font=font.Font(family="System"))
+
+    @staticmethod
+    def on_focus_out(event, message):
+        if event.widget.get() == "":
+            event.widget.insert(0, message)
+            event.widget.config(fg="gray", font=font.Font(family="System"))
+
 
 class Guides(tk.Frame):
     def __init__(self, parent, controller):
@@ -331,7 +399,7 @@ class Guides(tk.Frame):
         self.guides_bg = ImageTk.PhotoImage(self.guides_bg)
 
         self.league_logo = Image.open("league_logo.jpeg")
-        self.league_logo = self.league_logo.resize((150,150))
+        self.league_logo = self.league_logo.resize((150, 150))
         self.league_logo = ImageTk.PhotoImage(self.league_logo)
 
         self.valorant_logo = Image.open("valorant_logo.png")
@@ -531,9 +599,9 @@ class ValorantLeaderboard(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav(page_content, controller)
+        self.create_side_nav(controller, page_content)
 
-    def create_side_nav(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
         side_nav.grid(row=0, column=0, sticky="w")
 
@@ -583,7 +651,7 @@ class ValorantLeaderboard(tk.Frame):
 
 if __name__ == "__main__":
     app = RiotDirectoryApp()
-    #for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
-        #print(i)
+    for i in RiotAPI.get_personal_statistics("ChuuOnDeezNutz", "loona"):
+        print(i)
     #RiotAPI.get_radiant_valorant_leaderboard()
     app.mainloop()

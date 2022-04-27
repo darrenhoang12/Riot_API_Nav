@@ -1,7 +1,7 @@
 import requests
 
 # Riot Development API Key that needs to be refreshed daily
-riot_api_key = "api_key=RGAPI-cd935fa7-de25-4161-820b-273b789fe3d2"
+riot_api_key = "api_key=RGAPI-9e2e0a1c-5b16-4ada-9359-d192fe81be64"
 
 # Usage of this API in this program creates a dictionary where a champion can be found by its id
 champions_dict = {}
