@@ -30,6 +30,14 @@ class RiotDirectoryApp(tk.Tk):
         frame = self.frames[page_name.__name__]
         frame.tkraise()
 
+    @staticmethod
+    def hovering(e):
+        e.widget["background"] = "gray"
+
+    @staticmethod
+    def not_hovering(e):
+        e.widget["background"] = "#2b2b2b"
+
 
 class Homepage(tk.Frame):
     def __init__(self, parent, controller):
@@ -88,16 +96,10 @@ class Homepage(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         dir_widgets.remove(home)
         for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         main_content_frame = tk.Frame(frame, bg="#2b2b2b")
         main_content_frame.grid(row=1, column=1, padx=5)
@@ -170,16 +172,10 @@ class LeagueLeaderboard(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         dir_widgets.remove(league_lb)
         for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -248,16 +244,10 @@ class ProPlay(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         dir_widgets.remove(pro_play)
         for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -321,16 +311,10 @@ class PersonalStats(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         dir_widgets.remove(personal_stats)
         for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -369,9 +353,10 @@ class Guides(tk.Frame):
         page_content.grid(row=2, column=0, sticky="w")
         self.grid_rowconfigure(2, weight=1)
 
-        self.create_side_nav_and_guide_buttons(page_content, controller)
+        self.create_side_nav(controller, page_content)
+        self.create_main_content(controller, page_content)
 
-    def create_side_nav_and_guide_buttons(self, frame, controller):
+    def create_side_nav(self, controller, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
         side_nav.grid(row=0, column=0, sticky="w")
 
@@ -408,6 +393,12 @@ class Guides(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
+        dir_widgets.remove(guides)
+        for widget in dir_widgets:
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
+
+    def create_main_content(self, controller, frame):
         main_content_frame = tk.Frame(frame, bg="#2b2b2b")
         main_content_frame.grid(row=0, column=1, sticky="news")
 
@@ -421,7 +412,6 @@ class Guides(tk.Frame):
                                     height=2, highlightthickness=0, bd=0,
                                     font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                     command=lambda: controller.switch_frame(ValorantGuides))
-        dir_widgets.extend([league_guides, valorant_guides])
 
         lol_logo = tk.Label(main_content_frame, image=self.league_logo, bg="#2b2b2b")
         val_logo = tk.Label(main_content_frame, image=self.valorant_logo, bg="#2b2b2b", width=300)
@@ -432,16 +422,9 @@ class Guides(tk.Frame):
         val_logo.grid(row=0, column=1, pady=(50, 15))
         valorant_guides.grid(row=1, column=1)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
-        dir_widgets.remove(guides)
-        for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+        for widget in (league_guides, valorant_guides):
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -485,15 +468,9 @@ class LeagueGuides(tk.Frame):
             guide_nav_widgets[idx].grid(row=0, column=idx)
         guide_nav_bar.grid_columnconfigure((0, 1, 2), weight=1, uniform="column")
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         for button in guide_nav_widgets:
-            button.bind("<Enter>", hovering)
-            button.bind("<Leave>", not_hovering)
+            button.bind("<Enter>", controller.hovering)
+            button.bind("<Leave>", controller.not_hovering)
 
 
 class ValorantGuides(tk.Frame):
@@ -532,15 +509,9 @@ class ValorantGuides(tk.Frame):
             guide_nav_widgets[idx].grid(row=0, column=idx)
         guide_nav_bar.grid_columnconfigure((0, 1, 2), weight=1, uniform="column")
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         for button in guide_nav_widgets:
-            button.bind("<Enter>", hovering)
-            button.bind("<Leave>", not_hovering)
+            button.bind("<Enter>", controller.hovering)
+            button.bind("<Leave>", controller.not_hovering)
 
 
 class ValorantLeaderboard(tk.Frame):
@@ -599,16 +570,10 @@ class ValorantLeaderboard(tk.Frame):
         for idx in range(6):
             dir_widgets[idx].grid(row=idx, column=0)
 
-        def hovering(e):
-            e.widget["background"] = "gray"
-
-        def not_hovering(e):
-            e.widget["background"] = "#2b2b2b"
-
         dir_widgets.remove(valorant_lb)
         for widget in dir_widgets:
-            widget.bind("<Enter>", hovering)
-            widget.bind("<Leave>", not_hovering)
+            widget.bind("<Enter>", controller.hovering)
+            widget.bind("<Leave>", controller.not_hovering)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
