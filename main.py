@@ -8,7 +8,7 @@ class RiotDirectoryApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("LOL and Valorant Navigation App for Desktops")
-        self.geometry("1200x720")
+        self.geometry("985x720")
 
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
@@ -97,11 +97,11 @@ class Homepage(tk.Frame):
             widget.bind("<Enter>", self.controller.hovering)
             widget.bind("<Leave>", self.controller.not_hovering)
 
-        main_content_frame = tk.Frame(frame, bg="#2b2b2b")
-        main_content_frame.grid(row=1, column=0, sticky="n", padx=(45, 0), pady=(10, 0))
+        main_content_frame = tk.Frame(frame, bg="#2b2b2b", width=800, height=500)
+        main_content_frame.grid(row=1, column=0, sticky="n")
 
         img = tk.Label(main_content_frame, bg="#2b2b2b", image=self.photo)
-        img.grid(row=0, column=0, sticky="n")
+        img.place(x=0, y=0, relwidth=1, relheight=1)
 
         created_by_label = tk.Label(self, text="Created by Darren Hoang, UCI, 2022",
                                     bg="#2b2b2b", fg="white", font=("Helvetica", 8))
@@ -117,7 +117,7 @@ class LeagueLeaderboard(tk.Frame):
 
         page_title = tk.Label(self, text="LEAGUE OF LEGENDS LEADERBOARD", height=2,
                               font=font.Font(family="System", size=32), bg="#2b2b2b", fg="white")
-        page_title.grid(row=0, column=0, sticky="n", pady=10, padx=(20, 0))
+        page_title.grid(row=0, column=0, sticky="news", pady=10)
 
         page_content = tk.Frame(self, bg="#2b2b2b")
         page_content.grid(row=1, column=0, sticky="w")
@@ -201,16 +201,16 @@ class ProPlay(tk.Frame):
                          font=self.side_nav_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League Leaderboard",
+        league_lb = tk.Button(side_nav, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
                               font=self.side_nav_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
 
-        pro_play = tk.Button(side_nav, text="-> Pro Matches",
+        pro_play = tk.Button(side_nav, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
                              font=self.side_nav_font, bg="#2b2b2b", fg="white")
 
-        personal_stats = tk.Button(side_nav, text="League Personal Stats",
+        personal_stats = tk.Button(side_nav, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
                                    font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
@@ -220,7 +220,7 @@ class ProPlay(tk.Frame):
                            font=self.side_nav_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant Leaderboard",
+        valorant_lb = tk.Button(side_nav, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
                                 font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
@@ -250,22 +250,22 @@ class PersonalStats(tk.Frame):
         self.guides_bg = self.guides_bg.resize((825, 450))
         self.guides_bg = ImageTk.PhotoImage(self.guides_bg)
 
-        self.side_nav_font = font.Font(family="System", size=18)
+        self.side_nav_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="MATCH HISTORY", height=2,
                               font=font.Font(family="System", size=32), bg="#2b2b2b", fg="white")
         page_title.grid(row=0, column=0, sticky="news", pady=10)
-        break_line = tk.Label(self, text="", bg="white", height=0)
-        break_line.grid(row=1, column=0, sticky="news")
-        self.grid_columnconfigure(0, weight=1)
 
-        page_content = tk.Frame(self, bg="#2b2b2b")
-        page_content.grid(row=2, column=0, sticky="w")
-        self.grid_rowconfigure(2, weight=1)
+        nav_bar = tk.Frame(self, bg="#2b2b2b")
+        nav_bar.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
-        self.input_summoner_name_info(page_content)
+        main_content = tk.Frame(self, bg="#2b2b2b", width=985, height=500)
+        main_content.grid(row=2, column=0, sticky="w")
+        main_content.grid_propagate(False)
+
+        self.create_side_nav(nav_bar)
+        self.input_summoner_name_info(main_content)
 
     def create_side_nav(self, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
@@ -276,7 +276,7 @@ class PersonalStats(tk.Frame):
                          font=self.side_nav_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League Leaderboard",
+        league_lb = tk.Button(side_nav, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
                               font=self.side_nav_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
@@ -286,7 +286,7 @@ class PersonalStats(tk.Frame):
                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
 
-        personal_stats = tk.Button(side_nav, text="-> League Personal Stats",
+        personal_stats = tk.Button(side_nav, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
                                    font=self.side_nav_font, bg="#2b2b2b", fg="white")
 
@@ -295,14 +295,14 @@ class PersonalStats(tk.Frame):
                            font=self.side_nav_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant Leaderboard",
+        valorant_lb = tk.Button(side_nav, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
                                 font=self.side_nav_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx, column=0)
+            dir_widgets[idx].grid(row=0, column=idx)
 
         dir_widgets.remove(personal_stats)
         for widget in dir_widgets:
@@ -315,64 +315,62 @@ class PersonalStats(tk.Frame):
         self.grid_rowconfigure(7, weight=1)
 
     def input_summoner_name_info(self, frame):
-        main_content_frame = tk.Frame(frame, bg="#2b2b2b", width=800)
-        main_content_frame.grid(row=0, column=1, sticky="news")
-        main_content_frame.grid_propagate(False)
-
-        background_label = tk.Label(main_content_frame, image=self.guides_bg, bg="#2b2b2b")
-        prompt_input_label = tk.Label(main_content_frame, text="Find your match history",
-                                      font=font.Font(family="System", size=10), bg="#2b2b2b", fg="white")
-        entry_summoner_name = tk.Entry(main_content_frame, textvariable=self.summoner_name, width=25)
-        entry_summoner_tagline = tk.Entry(main_content_frame, textvariable=self.summoner_tagline, width=15)
-        search_button = tk.Button(main_content_frame, text="SEARCH", font=font.Font(family="System", size=10),
+        background_label = tk.Label(frame, image=self.guides_bg, bg="#2b2b2b")
+        entry_summoner_name = tk.Entry(frame, textvariable=self.summoner_name, width=25)
+        hash_label = tk.Label(frame, text="#", font=font.Font(weight="bold"), bg="#2b2b2b", fg="white")
+        entry_summoner_tagline = tk.Entry(frame, textvariable=self.summoner_tagline, width=15)
+        search_button = tk.Button(frame, text="SEARCH", font=self.side_nav_font, bg="white",
                                   command=lambda: self.create_stats(self.summoner_name.get(),
-                                                                    self.summoner_tagline.get(), main_content_frame))
+                                                                    self.summoner_tagline.get(), frame))
 
-        background_label.place(x=155, y=90, relheight=1, relwidth=1)
-        prompt_input_label.grid(row=0, column=0, sticky="w", padx=(7, 0))
+        background_label.place(x=200, y=85, relheight=1, relwidth=1)
+        hash_label.place(x=274, y=29)
 
-        entry_summoner_name.grid(row=1, column=0, padx=(10, 5))
+        entry_summoner_name.place(x=62, y=30)
         entry_summoner_name.insert(0, "Summoner name...")
         entry_summoner_name.config(fg="grey", font=font.Font(family="System"))
         entry_summoner_name.bind("<FocusIn>", lambda event: PersonalStats.on_entry_click(event, "Summoner name..."))
         entry_summoner_name.bind("<FocusOut>", lambda event: PersonalStats.on_focus_out(event, "Summoner name..."))
 
-        entry_summoner_tagline.grid(row=1, column=1)
+        entry_summoner_tagline.place(x=290, y=30)
         entry_summoner_tagline.insert(0, "Tagline...")
         entry_summoner_tagline.config(fg="grey", font=font.Font(family="System"))
         entry_summoner_tagline.bind("<FocusIn>", lambda event: PersonalStats.on_entry_click(event, "Tagline..."))
         entry_summoner_tagline.bind("<FocusOut>", lambda event: PersonalStats.on_focus_out(event, "Tagline..."))
 
         self.controller.bind("<Return>",
-                             lambda event: self.create_stats(self.summoner_name.get(),
-                                                             self.summoner_tagline.get(), main_content_frame))
+                             lambda event: PersonalStats.create_stats(self.summoner_name.get(),
+                                                                      self.summoner_tagline.get(), frame))
+        search_button.place(x=420, y=27)
 
-        search_button.grid(row=1, column=2, padx=(5, 0))
-
-    def create_stats(self, summoner_name, summoner_tagline, frame):
+    @staticmethod
+    def create_stats(summoner_name, summoner_tagline, frame):
         match_history = RiotAPI.get_personal_statistics(summoner_name, summoner_tagline)
         champions_played = []
         kills_match = []
         deaths_match = []
         assists_match = []
+        wins = []
 
         for match in match_history:
             champions_played.append(match["championName"])
             kills_match.append(match["kills"])
             deaths_match.append(match["deaths"])
             assists_match.append(match["assists"])
+            wins.append(match["win"])
         print(champions_played)
         print(kills_match)
         print(deaths_match)
         print(assists_match)
+        print(wins)
 
         new_f = tk.Frame(frame)
         new_f.grid(row=2, column=0)
 
-        i = 85
+        i = 90
         for champion in champions_played:
-            tk.Button(frame, text=champion, width=70, height=4,
-                      font=font.Font(family="System", size=10)).place(x=50, y=i)
+            tk.Button(frame, text=champion, width=90, height=4,
+                      font=font.Font(family="System", size=10)).place(x=62, y=i)
             i += 80
 
     @staticmethod
@@ -598,7 +596,7 @@ class ValorantLeaderboard(tk.Frame):
 
     def create_side_nav(self, frame):
         side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+        side_nav.grid(row=0, column=0, sticky="w", padx=(40, 0))
 
         home = tk.Button(side_nav, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
