@@ -45,7 +45,7 @@ class Homepage(tk.Frame):
         self.photo = self.photo.resize((825, 450))
         self.photo = ImageTk.PhotoImage(self.photo)
 
-        self.side_nav_font = font.Font(family="System", size=10)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         label = tk.Label(self, text="WELCOME TO RIOT-NAV", height=2,
@@ -56,36 +56,36 @@ class Homepage(tk.Frame):
         page_content = tk.Frame(self, background="#2b2b2b")
         page_content.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
-        self.create_side_nav(page_content)
+        self.create_nav_bar(page_content)
+        self.create_nav_bar(page_content)
 
-    def create_side_nav(self, frame):
-        # side_nav frame holds the side navigation buttons
-        side_nav = tk.Frame(frame, background="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+    def create_nav_bar(self, frame):
+        # nav_bar frame holds the side navigation buttons
+        nav_bar = tk.Frame(frame, background="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
 
-        home = tk.Button(side_nav, text="Home",
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white")
-        league_lb = tk.Button(side_nav, text="League of Legends",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white")
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
-        personal_stats = tk.Button(side_nav, text="Match History",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
-        guides = tk.Button(side_nav, text="Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
-        valorant_lb = tk.Button(side_nav, text="Valorant",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
@@ -112,7 +112,7 @@ class Homepage(tk.Frame):
 class LeagueLeaderboard(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#2b2b2b")
-        self.side_nav_font = font.Font(family="System", size=10)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="LEAGUE OF LEGENDS LEADERBOARD", height=2,
@@ -122,39 +122,39 @@ class LeagueLeaderboard(tk.Frame):
         page_content = tk.Frame(self, bg="#2b2b2b")
         page_content.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
+        self.create_nav_bar(page_content)
 
-    def create_side_nav(self, frame):
-        side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+    def create_nav_bar(self, frame):
+        nav_bar = tk.Frame(frame, bg="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
 
-        home = tk.Button(side_nav, text="Home",
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League of Legends",
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white")
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white")
 
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
 
-        personal_stats = tk.Button(side_nav, text="Match History",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
 
-        guides = tk.Button(side_nav, text="Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
@@ -180,7 +180,7 @@ class LeagueLeaderboard(tk.Frame):
 class ProPlay(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#2b2b2b")
-        self.side_nav_font = font.Font(family="System", size=10)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="PRO MATCHES", height=2,
@@ -190,39 +190,39 @@ class ProPlay(tk.Frame):
         page_content = tk.Frame(self, bg="#2b2b2b")
         page_content.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
+        self.create_nav_bar(page_content)
 
-    def create_side_nav(self, frame):
-        side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+    def create_nav_bar(self, frame):
+        nav_bar = tk.Frame(frame, bg="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
 
-        home = tk.Button(side_nav, text="Home",
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League of Legends",
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
 
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white")
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white")
 
-        personal_stats = tk.Button(side_nav, text="Match History",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
 
-        guides = tk.Button(side_nav, text="Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
@@ -250,7 +250,7 @@ class PersonalStats(tk.Frame):
         self.guides_bg = self.guides_bg.resize((825, 450))
         self.guides_bg = ImageTk.PhotoImage(self.guides_bg)
 
-        self.side_nav_font = font.Font(family="System", size=10)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="MATCH HISTORY", height=2,
@@ -264,40 +264,40 @@ class PersonalStats(tk.Frame):
         main_content.grid(row=2, column=0, sticky="w")
         main_content.grid_propagate(False)
 
-        self.create_side_nav(nav_bar)
+        self.create_nav_bar(nav_bar)
         self.input_summoner_name_info(main_content)
 
-    def create_side_nav(self, frame):
-        side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+    def create_nav_bar(self, frame):
+        nav_bar = tk.Frame(frame, bg="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
 
-        home = tk.Button(side_nav, text="Home",
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League of Legends",
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
 
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
 
-        personal_stats = tk.Button(side_nav, text="Match History",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white")
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white")
 
-        guides = tk.Button(side_nav, text="Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
@@ -319,7 +319,7 @@ class PersonalStats(tk.Frame):
         entry_summoner_name = tk.Entry(frame, textvariable=self.summoner_name, width=25)
         hash_label = tk.Label(frame, text="#", font=font.Font(weight="bold"), bg="#2b2b2b", fg="white")
         entry_summoner_tagline = tk.Entry(frame, textvariable=self.summoner_tagline, width=15)
-        search_button = tk.Button(frame, text="SEARCH", font=self.side_nav_font, bg="white",
+        search_button = tk.Button(frame, text="SEARCH", font=self.nav_bar_font, bg="white",
                                   command=lambda: self.create_stats(self.summoner_name.get(),
                                                                     self.summoner_tagline.get(), frame))
 
@@ -403,60 +403,60 @@ class Guides(tk.Frame):
         self.valorant_logo = self.valorant_logo.resize((150, 150))
         self.valorant_logo = ImageTk.PhotoImage(self.valorant_logo)
 
-        self.side_nav_font = font.Font(family="System", size=18)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="GUIDES", height=2,
                               font=font.Font(family="System", size=32), bg="#2b2b2b", fg="white")
         page_title.grid(row=0, column=0, sticky="news", pady=10)
-        break_line = tk.Label(self, text="", bg="white", height=0)
-        break_line.grid(row=1, column=0, sticky="news")
-        self.grid_columnconfigure(0, weight=1)
 
         # must add in order to add things to the right of the side navigation.
-        page_content = tk.Frame(self, bg="#2b2b2b")
-        page_content.grid(row=2, column=0, sticky="w")
-        self.grid_rowconfigure(2, weight=1)
+        nav_bar = tk.Frame(self, bg="#2b2b2b")
+        nav_bar.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
-        self.create_main_content(page_content)
+        main_content = tk.Frame(self, bg="#2b2b2b", width=985, height=500)
+        main_content.grid(row=2, column=0, sticky="w")
+        main_content.grid_propagate(False)
 
-    def create_side_nav(self, frame):
-        side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w")
+        self.create_nav(nav_bar)
+        self.create_main_content(main_content)
 
-        home = tk.Button(side_nav, text="Home",
+    def create_nav(self, frame):
+        nav_bar = tk.Frame(frame, bg="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
+
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League Leaderboard",
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
 
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
 
-        personal_stats = tk.Button(side_nav, text="League Personal Stats",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
 
-        guides = tk.Button(side_nav, text="-> Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white")
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white")
 
-        valorant_lb = tk.Button(side_nav, text="Valorant Leaderboard",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                 command=lambda: self.controller.switch_frame(ValorantLeaderboard))
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
-            dir_widgets[idx].grid(row=idx, column=0)
+            dir_widgets[idx].grid(row=0, column=idx)
 
         dir_widgets.remove(guides)
         for widget in dir_widgets:
@@ -464,27 +464,26 @@ class Guides(tk.Frame):
             widget.bind("<Leave>", self.controller.not_hovering)
 
     def create_main_content(self, frame):
-        main_content_frame = tk.Frame(frame, bg="#2b2b2b")
-        main_content_frame.grid(row=0, column=1, sticky="news")
+        background_label = tk.Label(frame, image=self.guides_bg, bg="#2b2b2b")
 
-        background_label = tk.Label(main_content_frame, image=self.guides_bg, bg="#2b2b2b")
-
-        league_guides = tk.Button(main_content_frame, text="League Guides",
+        league_guides = tk.Button(frame, text="League Guides",
                                   height=2, highlightthickness=0, bd=0,
-                                  font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                  font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                   command=lambda: self.controller.switch_frame(LeagueGuides))
-        valorant_guides = tk.Button(main_content_frame, text="Valorant Guides",
+        valorant_guides = tk.Button(frame, text="Valorant Guides",
                                     height=2, highlightthickness=0, bd=0,
-                                    font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                    font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                     command=lambda: self.controller.switch_frame(ValorantGuides))
 
-        lol_logo = tk.Label(main_content_frame, image=self.league_logo, bg="#2b2b2b")
-        val_logo = tk.Label(main_content_frame, image=self.valorant_logo, bg="#2b2b2b", width=310)
+        lol_logo = tk.Button(frame, image=self.league_logo, bg="#2b2b2b",
+                             command=lambda: self.controller.switch_frame(LeagueGuides))
+        val_logo = tk.Button(frame, image=self.valorant_logo, bg="#2b2b2b",
+                             command=lambda: self.controller.switch_frame(ValorantGuides))
 
-        background_label.place(x=151, y=90, relheight=1, relwidth=1)
-        lol_logo.grid(row=0, column=0, padx=170, pady=(50, 15))
+        background_label.place(x=200, y=85, relheight=1, relwidth=1)
+        lol_logo.grid(row=0, column=0, padx=200, pady=(100, 15))
         league_guides.grid(row=1, column=0)
-        val_logo.grid(row=0, column=1, pady=(50, 15))
+        val_logo.grid(row=0, column=1, padx=50, pady=(100, 15))
         valorant_guides.grid(row=1, column=1)
 
         for widget in (league_guides, valorant_guides):
@@ -582,7 +581,7 @@ class ValorantGuides(tk.Frame):
 class ValorantLeaderboard(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg="#2b2b2b")
-        self.side_nav_font = font.Font(family="System", size=10)
+        self.nav_bar_font = font.Font(family="System", size=10)
         self.controller = controller
 
         page_title = tk.Label(self, text="RADIANT LEADERBOARD", height=2,
@@ -592,40 +591,40 @@ class ValorantLeaderboard(tk.Frame):
         page_content = tk.Frame(self, bg="#2b2b2b")
         page_content.grid(row=1, column=0, sticky="w")
 
-        self.create_side_nav(page_content)
+        self.create_nav_bar(page_content)
 
-    def create_side_nav(self, frame):
-        side_nav = tk.Frame(frame, bg="#2b2b2b")
-        side_nav.grid(row=0, column=0, sticky="w", padx=(40, 0))
+    def create_nav_bar(self, frame):
+        nav_bar = tk.Frame(frame, bg="#2b2b2b")
+        nav_bar.grid(row=0, column=0, sticky="w")
 
-        home = tk.Button(side_nav, text="Home",
+        home = tk.Button(nav_bar, text="Home",
                          width=20, height=2, highlightthickness=0, bd=0,
-                         font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                         font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                          command=lambda: self.controller.switch_frame(Homepage))
 
-        league_lb = tk.Button(side_nav, text="League of Legends",
+        league_lb = tk.Button(nav_bar, text="League of Legends",
                               width=20, height=2, highlightthickness=0, bd=0,
-                              font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                              font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                               command=lambda: self.controller.switch_frame(LeagueLeaderboard))
 
-        pro_play = tk.Button(side_nav, text="Pro Matches",
+        pro_play = tk.Button(nav_bar, text="Pro Matches",
                              width=20, height=2, highlightthickness=0, bd=0,
-                             font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                             font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                              command=lambda: self.controller.switch_frame(ProPlay))
 
-        personal_stats = tk.Button(side_nav, text="Match History",
+        personal_stats = tk.Button(nav_bar, text="Match History",
                                    width=20, height=2, highlightthickness=0, bd=0,
-                                   font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                                   font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                                    command=lambda: self.controller.switch_frame(PersonalStats))
 
-        guides = tk.Button(side_nav, text="Guides",
+        guides = tk.Button(nav_bar, text="Guides",
                            width=20, height=2, highlightthickness=0, bd=0,
-                           font=self.side_nav_font, bg="#2b2b2b", fg="white",
+                           font=self.nav_bar_font, bg="#2b2b2b", fg="white",
                            command=lambda: self.controller.switch_frame(Guides))
 
-        valorant_lb = tk.Button(side_nav, text="Valorant",
+        valorant_lb = tk.Button(nav_bar, text="Valorant",
                                 width=20, height=2, highlightthickness=0, bd=0,
-                                font=self.side_nav_font, bg="#2b2b2b", fg="white")
+                                font=self.nav_bar_font, bg="#2b2b2b", fg="white")
 
         dir_widgets = [home, league_lb, pro_play, personal_stats, guides, valorant_lb]
         for idx in range(6):
